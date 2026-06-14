@@ -92,7 +92,7 @@ cp .env.example .env
 
 ### 4. Run the app
 ```bash
-streamlit run app.py
+https://fashionfind-ai.streamlit.app
 ```
 
 Open your browser at `http://localhost:8501` and start chatting! 🎉
