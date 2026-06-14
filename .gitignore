@@ -7,3 +7,4 @@ venv/
 .streamlit/
 .DS_Store
 sentence_transformers_cache/
+.DS_Store
