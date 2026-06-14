@@ -130,7 +130,7 @@ def fashion_assistant(user_query, df, model, index, budget=None, groq_api_key=No
     context = "\n".join(results)
 
     # Step 4: LLM via Groq
-    client = Groq(api_key=groq_api_key)
+    client = Groq(api_key=st.secrets["GROQ_API_KEY"])
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=[
