@@ -5,6 +5,7 @@ from sentence_transformers import SentenceTransformer
 import faiss
 from groq import Groq
 import os
+groq_api_key = st.secrets["GROQ_API_KEY"]
 
 # ─────────────────────────────────────────
 # Page config
