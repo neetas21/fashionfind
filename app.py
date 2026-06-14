@@ -5,7 +5,6 @@ from sentence_transformers import SentenceTransformer
 import faiss
 from groq import Groq
 import os
-groq_api_key = st.secrets["GROQ_API_KEY"]
 
 # ─────────────────────────────────────────
 # Page config
@@ -106,7 +105,7 @@ def load_model_and_index(df):
 # ─────────────────────────────────────────
 # RAG Core Function
 # ─────────────────────────────────────────
-def fashion_assistant(user_query, df, model, index, budget=None, groq_api_key=None):
+def fashion_assistant(user_query, df, model, index, budget=None):
     # Step 1: Embed query
     query_embedding = model.encode([user_query]).astype('float32')
 
@@ -162,8 +161,7 @@ st.markdown("---")
 # Sidebar
 with st.sidebar:
     st.markdown("## ⚙️ Settings")
-    groq_api_key = st.text_input("Groq API Key", type="password", placeholder="gsk_...")
-    st.markdown("Get your free key at [groq.com](https://console.groq.com)")
+    st.success("✅ Groq API Key loaded!")
     st.markdown("---")
     budget = st.slider("💰 Max Budget (₹)", min_value=500, max_value=7000, value=7000, step=500)
     st.markdown(f"**Budget set to:** ₹{budget}")
@@ -226,34 +224,30 @@ else:
 
 # Process input
 if user_input:
-    if not groq_api_key:
-        st.error("⚠️ Please enter your Groq API key in the sidebar to get started!")
-    else:
-        st.session_state.messages.append({"role": "user", "content": user_input})
+    st.session_state.messages.append({"role": "user", "content": user_input})
 
-        with st.chat_message("user"):
-            st.write(user_input)
+    with st.chat_message("user"):
+        st.write(user_input)
 
-        with st.chat_message("assistant", avatar="👗"):
-            with st.spinner("Finding perfect outfits for you...✨"):
-                model, index = load_model_and_index(df)
-                reply, matched_products = fashion_assistant(
-                    user_input, df, model, index,
-                    budget=budget if budget < 7000 else None,
-                    groq_api_key=groq_api_key
-                )
-                st.write(reply)
-                if matched_products:
-                    for p in matched_products:
-                        st.markdown(f"""
-                        <div class="product-card">
-                            <b>{p['name']}</b> &nbsp;|&nbsp; {p['color']} &nbsp;|&nbsp; ₹{p['price']}<br>
-                            <small>{p['description']}</small>
-                        </div>
-                        """, unsafe_allow_html=True)
+    with st.chat_message("assistant", avatar="👗"):
+        with st.spinner("Finding perfect outfits for you...✨"):
+            model, index = load_model_and_index(df)
+            reply, matched_products = fashion_assistant(
+                user_input, df, model, index,
+                budget=budget if budget < 7000 else None,
+            )
+            st.write(reply)
+            if matched_products:
+                for p in matched_products:
+                    st.markdown(f"""
+                    <div class="product-card">
+                        <b>{p['name']}</b> &nbsp;|&nbsp; {p['color']} &nbsp;|&nbsp; ₹{p['price']}<br>
+                        <small>{p['description']}</small>
+                    </div>
+                    """, unsafe_allow_html=True)
 
-        st.session_state.messages.append({
-            "role": "assistant",
-            "content": reply,
-            "products": [p.to_dict() for p in matched_products] if matched_products else []
-        })
+    st.session_state.messages.append({
+        "role": "assistant",
+        "content": reply,
+        "products": [p.to_dict() for p in matched_products] if matched_products else []
+    })
