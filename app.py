@@ -53,7 +53,7 @@ st.markdown("""
 @st.cache_data
 def load_catalog():
     # Load real cleaned Myntra data
-    df = pd.read_csv('products_clean.csv')
+    df = pd.read_csv('https://raw.githubusercontent.com/neetas21/fashionfind/main/myntra_product_data.csv')
     # Make sure description has no nulls (safety check)
     df = df[df['description'].notna()].reset_index(drop=True)
     return df
