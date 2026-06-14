@@ -8,6 +8,8 @@
 
 > A production-style **RAG (Retrieval-Augmented Generation)** pipeline that acts as an AI-powered fashion assistant. Users describe what they're looking for and get intelligent, personalized product recommendations in natural language.
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Try_Now-success?style=for-the-badge)](https://fashionfind-ai.streamlit.app)
+
 ---
 
 ## 🎯 What It Does
