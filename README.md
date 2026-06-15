@@ -121,7 +121,7 @@ This means the LLM never hallucinates products — it only recommends what actua
 - [x] Core RAG pipeline (embeddings + FAISS + LLM)
 - [x] Budget filtering
 - [x] Streamlit chat UI
-- [ ] Expand product catalog (100+ items)
+- [x] Expand product catalog (100+ items)
 - [ ] Add Pinecone for production vector storage
 - [ ] Add image-based search (upload a photo, find similar)
 - [ ] Apache Airflow pipeline for catalog auto-updates
